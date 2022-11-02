@@ -11,7 +11,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @Entity
-@Table
+@Table(name="ProduitSpring")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
