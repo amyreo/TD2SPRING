@@ -19,6 +19,9 @@ import com.inti.model.Magasin;
 import com.inti.model.Produit;
 import com.inti.service.MagasinServiceImpl;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 @RequestMapping("magasin")
 public class MagasinController {
@@ -32,8 +35,10 @@ public class MagasinController {
 
 	@PostMapping("/saveMagasin")
 	public void saveMagasin(@RequestBody Magasin prod) {
-		System.out.println(prod.toString());
-		psi.saveMagasin(prod);
+		if (prod != null) {
+			psi.saveMagasin(prod);
+		}
+		log.error("L'objet magasin " + prod + "n'a pas pu être enregistré en BDD.");
 	}
 
 	@GetMapping("/getMagasin/{id}")
