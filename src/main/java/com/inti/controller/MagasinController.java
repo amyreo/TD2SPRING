@@ -80,7 +80,7 @@ public class MagasinController {
 	
 	@GetMapping("byName/{nom}")
 	public Magasin getMagasinByNom(@PathVariable String nom) {
-		
+		return imr.findByNom(nom);
 	}
 	
 	
