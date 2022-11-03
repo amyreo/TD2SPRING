@@ -51,7 +51,7 @@ public class MagasinController {
 		return psi.getMagasins();
 	}
 
-	@PostMapping("deleteMagasin")
+	@PostMapping("deleteMagasin/{id}")
 	public void deleteMagasin(@PathVariable int id) {
 		System.out.println(psi.getMagasin(id).toString());
 		psi.deleteMagasin(id);
