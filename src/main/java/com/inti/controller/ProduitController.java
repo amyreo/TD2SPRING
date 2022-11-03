@@ -3,6 +3,11 @@ package com.inti.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.inti.model.Magasin;
 import com.inti.model.Produit;
 import com.inti.service.ProduitServiceImpl;
 
@@ -22,6 +28,10 @@ public class ProduitController {
 	@Autowired
 	ProduitServiceImpl psi;
 
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "Produit_Magasin", joinColumns = @JoinColumn(name = "Produit"), inverseJoinColumns = @JoinColumn(name = "Magasin"))
+	List<Magasin> lMagasin;
+	
 	@GetMapping("/affichage")
 	public String affichageNomProduit(
 			@RequestParam(name = "nom", defaultValue = "Chaise", required = true) String nomp) {
