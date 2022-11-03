@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.inti.model.Magasin;
@@ -56,9 +57,15 @@ public class MagasinController {
 	}
 
 	@PostMapping("deleteMagasin/{id}")
-	public void deleteMagasin(@PathVariable int id) {
-		System.out.println(psi.getMagasin(id).toString());
-		psi.deleteMagasin(id);
+	public boolean deleteMagasin(@PathVariable int id) {
+		
+		int maxId = imr.findMaxId();
+		log.info("maxID : " + maxId);
+		if (id > 0 && id < maxId) {
+			imr.deleteById(id);
+			return true;
+		}
+		return false;
 	}
 
 	@PostMapping("associerProduits/{id}")
@@ -81,6 +88,16 @@ public class MagasinController {
 	@GetMapping("byName/{nom}")
 	public Magasin getMagasinByNom(@PathVariable String nom) {
 		return imr.findByNom(nom);
+	}
+	
+	@GetMapping("byCpAndVille")
+	public Magasin getMagasinByCpAndVille(@RequestParam(name = "cp") String cp, @RequestParam(name = "ville") String ville) {
+		return imr.findByCpAndVille(cp, ville);
+	}
+	
+	@PostMapping("updateAdresseCp")
+	public void updateMagasinByAdresseAndCp(@RequestParam(name = "adresse") String adresse, @RequestParam(name = "cp") String cp, @RequestParam(name = "id") int id) {
+		imr.updateAdresseAndCpById(adresse, cp, id);
 	}
 	
 	
