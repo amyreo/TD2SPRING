@@ -8,6 +8,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -94,8 +95,8 @@ public class MagasinController {
 	public Magasin getMagasinByCpAndVille(@RequestParam(name = "cp") String cp, @RequestParam(name = "ville") String ville) {
 		return imr.findByCpAndVille(cp, ville);
 	}
-	
-	@PostMapping("updateAdresseCp")
+
+	@PostMapping("updateAdresseAndCp")
 	public void updateMagasinByAdresseAndCp(@RequestParam(name = "adresse") String adresse, @RequestParam(name = "cp") String cp, @RequestParam(name = "id") int id) {
 		imr.updateAdresseAndCpById(adresse, cp, id);
 	}
