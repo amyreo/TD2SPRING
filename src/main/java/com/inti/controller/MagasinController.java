@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.inti.model.Magasin;
 import com.inti.model.Produit;
+import com.inti.repository.IMagasinRepository;
+import com.inti.repository.IProduitRepository;
 import com.inti.service.MagasinServiceImpl;
 
 import lombok.extern.slf4j.Slf4j;
@@ -26,12 +28,14 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("magasin")
 public class MagasinController {
 
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "Produit_Magasin", joinColumns = @JoinColumn(name = "Magasin"), inverseJoinColumns = @JoinColumn(name = "Produit"))
-	List<Produit> lProduit;
-
 	@Autowired
 	MagasinServiceImpl psi;
+
+	@Autowired
+	IMagasinRepository imr;
+
+	@Autowired
+	IProduitRepository ipr;
 
 	@PostMapping("/saveMagasin")
 	public void saveMagasin(@RequestBody Magasin prod) {
@@ -56,4 +60,28 @@ public class MagasinController {
 		System.out.println(psi.getMagasin(id).toString());
 		psi.deleteMagasin(id);
 	}
+
+	@PostMapping("associerProduits/{id}")
+	public boolean associerProduitsToMagasin(@PathVariable int id) {
+
+		try {
+			Magasin magasin = imr.findById(id).get();
+			List<Produit> listeProduit = ipr.findAll();
+			magasin.setLProduit(listeProduit);
+			imr.save(magasin);
+			return true;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+
+	}
+	
+	@GetMapping("byName/{nom}")
+	public Magasin getMagasinByNom(@PathVariable String nom) {
+		
+	}
+	
+	
 }

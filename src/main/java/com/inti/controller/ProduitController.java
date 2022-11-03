@@ -28,9 +28,6 @@ public class ProduitController {
 	@Autowired
 	ProduitServiceImpl psi;
 
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "Produit_Magasin", joinColumns = @JoinColumn(name = "Produit"), inverseJoinColumns = @JoinColumn(name = "Magasin"))
-	List<Magasin> lMagasin;
 	
 	@GetMapping("/affichage")
 	public String affichageNomProduit(
