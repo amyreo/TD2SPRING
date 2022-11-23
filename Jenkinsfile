@@ -10,7 +10,7 @@ pipeline {
         stage('Nettoyage') {
             steps {
                 // Get some code from a GitHub repository
-                git 'https://github.com/formateur1/SpringTD2.git'
+                git 'https://github.com/theolorenzi/TD2SPRING.git'
 
                 // Run Maven on a Unix agent.
                 // sh "mvn -Dmaven.test.failure.ignore=true clean package"
@@ -46,7 +46,7 @@ pipeline {
         
         failure {
             echo "Echec"
-            mail to: "enseignant.formateur@protonmail.com",
+            mail to: "theo.lorenzi@laposte.net",
                 subject: "Echec pipeline : ${currentBuild.fullDisplayName}",
                 body: "Erreur dans le build : ${env.BUILD_URL}"
         }
