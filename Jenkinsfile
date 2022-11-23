@@ -51,3 +51,4 @@ pipeline {
                 body: "Erreur dans le build : ${env.BUILD_URL}"
         }
     }
+}
